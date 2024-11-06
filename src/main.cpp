@@ -3,13 +3,15 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 #include <iostream>
 
-std::vector<std::vector<char>> read_map(const std::string& filename);
+std::vector<std::vector<char>> read_map(const std::string& filename, sf::Vector2i& playerPos);
 sf::Sprite put_texture(sf::Texture& texture, std::string path);
 
 int main()
 {
-    std::vector<std::vector<char>> map = read_map("map/map1.txt");
     const int tileSize = 32;
+
+    sf::Vector2i playerPos(0,0);
+    std::vector<std::vector<char>> map = read_map("map/map1.txt", playerPos);
     int rows = map.size(); // マップの行数
     int cols = map[0].size(); // マップの列数
 
