@@ -1,19 +1,27 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "SFML/Graphics/RenderWindow.hpp"
+#include <iostream>
 
 std::vector<std::vector<char>> read_map(const std::string& filename);
+sf::Sprite put_texture(sf::Texture& texture, std::string path);
 
 int main()
 {
-    std::vector<std::vector<char>> map = read_map("map/map2.txt");
+    std::vector<std::vector<char>> map = read_map("map/map1.txt");
     const int tileSize = 32;
     int rows = map.size(); // マップの行数
     int cols = map[0].size(); // マップの列数
 
     sf::RenderWindow window(sf::VideoMode(cols * tileSize, rows * tileSize), "My window");
 
-    // run the program as long as the window is open
+    sf::Texture player_tex, floor_tex, grass_tex, item_tex, exit_tex;
+    sf::Sprite player_sprite = put_texture(player_tex, "png/player.png");
+    sf::Sprite floor_sprite = put_texture(floor_tex, "png/floor.png");
+    sf::Sprite grass_sprite = put_texture(grass_tex, "png/grass.png");
+    sf::Sprite item_sprite = put_texture(item_tex, "png/onigiri.png");
+    sf::Sprite exit_sprite = put_texture(exit_tex, "png/exit.png");
+
     while (window.isOpen())
     {
         // check all the window's events that were triggered since the last iteration of the loop
@@ -30,28 +38,27 @@ int main()
 
         for (int row = 0; row < map.size(); ++row) {
             for (int col = 0; col < map[row].size(); col++) {
+                floor_sprite.setPosition(col * tileSize, row * tileSize);
+                window.draw(floor_sprite);
                 if (map[row][col] == '1') {
-                    sf::RectangleShape wall(sf::Vector2f(tileSize, tileSize));
-                    wall.setFillColor(sf::Color::Blue);
-                    wall.setPosition(col * tileSize, row * tileSize);
-                    window.draw(wall);
-                }
-                else if (map[row][col] == '0') {
-                    sf::RectangleShape path(sf::Vector2f(tileSize, tileSize));
-                    path.setFillColor(sf::Color::White);
-                    path.setPosition(col * tileSize, row * tileSize);
-                    window.draw(path);
+                    grass_sprite.setPosition(col * tileSize, row * tileSize);
+                    window.draw(grass_sprite);
                 }
                 else if (map[row][col] == 'C') {
-                    sf::RectangleShape item(sf::Vector2f(tileSize, tileSize));
-                    item.setFillColor(sf::Color::Red);
-                    item.setPosition(col * tileSize, row * tileSize);
-                    window.draw(item);
+                    item_sprite.setPosition(col * tileSize, row * tileSize);
+                    window.draw(item_sprite);
+                }
+                else if (map[row][col] == 'P') {
+                    player_sprite.setPosition(col * tileSize, row * tileSize);
+                    window.draw(player_sprite);
+                }
+                else if (map[row][col] == 'E') {
+                    exit_sprite.setPosition(col * tileSize, row * tileSize);
+                    window.draw(exit_sprite);
                 }
             }
         }
         window.display();
     }
-
     return 0;
 }

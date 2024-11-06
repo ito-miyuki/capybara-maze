@@ -17,12 +17,14 @@ std::vector<std::vector<char>> read_map(const std::string& filename) {
         std::vector<char> row;
         // 範囲ベースforループの構文
         for (char c : line) {
-            if (c == '1')
-                row.push_back('1');
-            else if (c == '0')
-                row.push_back('0');
-            else if (c == 'C')
-                row.push_back('C');
+            // don't need this condition to make it simple
+            // if (c == '1')
+            //     row.push_back('1');
+            // else if (c == '0')
+            //     row.push_back('0');
+            // else if (c == 'C')
+            //     row.push_back('C');
+            row.push_back(c);
         }
         map_data.push_back(row);
     }
