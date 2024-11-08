@@ -1,17 +1,10 @@
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include "SFML/Graphics/RenderWindow.hpp"
-#include <iostream>
-
-std::vector<std::vector<char>> read_map(const std::string& filename, sf::Vector2i& playerPos);
-sf::Sprite put_texture(sf::Texture& texture, std::string path);
+#include "solong.hpp"
 
 int main()
 {
-    const int tileSize = 32;
-
     sf::Vector2i playerPos(0,0);
-    std::vector<std::vector<char>> map = read_map("map/map1.txt", playerPos);
+
+    std::vector<std::vector<char>> map = read_map("map/map2.txt", playerPos);
     int rows = map.size(); // マップの行数
     int cols = map[0].size(); // マップの列数
 
@@ -34,13 +27,14 @@ int main()
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 window.close();
+            //movement(playerPos, map, event);
+            movement(playerPos, map, event);
         }
-
         window.clear(sf::Color::Blue);
 
         for (int row = 0; row < map.size(); ++row) {
             for (int col = 0; col < map[row].size(); col++) {
-                floor_sprite.setPosition(col * tileSize, row * tileSize);
+                floor_sprite.setPosition((col * tileSize), row * tileSize);
                 window.draw(floor_sprite);
                 if (map[row][col] == '1') {
                     grass_sprite.setPosition(col * tileSize, row * tileSize);
@@ -50,16 +44,14 @@ int main()
                     item_sprite.setPosition(col * tileSize, row * tileSize);
                     window.draw(item_sprite);
                 }
-                else if (map[row][col] == 'P') {
-                    player_sprite.setPosition(col * tileSize, row * tileSize);
-                    window.draw(player_sprite);
-                }
                 else if (map[row][col] == 'E') {
                     exit_sprite.setPosition(col * tileSize, row * tileSize);
                     window.draw(exit_sprite);
                 }
             }
         }
+        player_sprite.setPosition(playerPos.x * tileSize, playerPos.y * tileSize);
+        window.draw(player_sprite);
         window.display();
     }
     return 0;

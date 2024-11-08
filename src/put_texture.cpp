@@ -1,5 +1,4 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
+#include "solong.hpp"
 
 sf::Sprite put_texture(sf::Texture& texture, std::string path) {
     if (!texture.loadFromFile(path)) {

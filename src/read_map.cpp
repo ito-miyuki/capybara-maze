@@ -1,7 +1,4 @@
-#include <fstream>
-#include <iostream>
-#include <vector>
-#include <SFML/Graphics.hpp> 
+#include "solong.hpp"
 
 std::vector<std::vector<char>> read_map(const std::string& filename, sf::Vector2i& playerPos) {
     std::ifstream file(filename);
@@ -13,24 +10,6 @@ std::vector<std::vector<char>> read_map(const std::string& filename, sf::Vector2
 
     std::vector<std::vector<char>> map_data;
     std::string line;
-
-    // while (std::getline(file, line)) {
-    //     std::vector<char> row;
-    //     // 範囲ベースforループの構文
-    //     for (char c : line) {
-    //         // don't need this condition to make it simple
-    //         // if (c == '1')
-    //         //     row.push_back('1');
-    //         // else if (c == '0')
-    //         //     row.push_back('0');
-    //         // else if (c == 'C')
-    //         //     row.push_back('C');
-    //         if (c == 'P')
-    //             playerPos  = sf::Vector2i(col, row);               
-    //         row.push_back(c);
-    //     }
-    //     map_data.push_back(row);
-    // }
 
     int row = 0;
     while (std::getline(file, line)) {
