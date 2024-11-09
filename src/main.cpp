@@ -4,9 +4,13 @@ int main()
 {
     sf::Vector2i playerPos(0,0);
 
-    std::vector<std::vector<char>> map = read_map("map/map2.txt", playerPos);
+    int totalItems = 0;
+    std::vector<std::vector<char>> map = read_map("map/map2.txt", playerPos, totalItems);
+
     int rows = map.size(); // マップの行数
     int cols = map[0].size(); // マップの列数
+
+    Game game(totalItems);
 
     sf::RenderWindow window(sf::VideoMode(cols * tileSize, rows * tileSize), "My window");
 
@@ -19,7 +23,6 @@ int main()
 
     while (window.isOpen())
     {
-        // check all the window's events that were triggered since the last iteration of the loop
         // ウィンドウで発生したイベント（キーボード、マウス、ウィンドウの閉じるボタンなど）を処理
         sf::Event event;
         while (window.pollEvent(event))
@@ -27,9 +30,9 @@ int main()
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 window.close();
-            //movement(playerPos, map, event);
-            movement(playerPos, map, event);
+            movement(playerPos, map, event, game);
         }
+        
         window.clear(sf::Color::Blue);
 
         for (int row = 0; row < map.size(); ++row) {
@@ -52,6 +55,9 @@ int main()
         }
         player_sprite.setPosition(playerPos.x * tileSize, playerPos.y * tileSize);
         window.draw(player_sprite);
+
+        game.update(window);
+
         window.display();
     }
     return 0;
