@@ -4,7 +4,7 @@ void movement(sf::Vector2i &playerPos, std::vector<std::vector<char>>& map, sf::
     int rows = map.size();
     int cols = map[0].size();
     
-    if (event.type == sf::Event::KeyPressed) {
+    if (event.type == sf::Event::KeyPressed && !game.checkGameOver(playerPos)) {
         if (event.key.code == sf::Keyboard::W && playerPos.y > 0) {
             if (map[playerPos.y - 1][playerPos.x] == 'E') {
                 if (game.canReachGoal())

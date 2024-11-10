@@ -1,6 +1,6 @@
 #include "solong.hpp"
 
-std::vector<std::vector<char>> read_map(const std::string& filename, sf::Vector2i& playerPos, int& totalItems) {
+std::vector<std::vector<char>> read_map(const std::string& filename, sf::Vector2i& playerPos, sf::Vector2i& enemyStartPos, int& totalItems) {
     std::ifstream file(filename);
 
     if(!file.is_open()) {
@@ -23,6 +23,9 @@ std::vector<std::vector<char>> read_map(const std::string& filename, sf::Vector2
             }
             if (c == 'C') {
                 totalItems++;
+            }
+            if (c == 'X') {
+                enemyStartPos = sf::Vector2i(col, row);
             }
         }
         map_data.push_back(row_data);
