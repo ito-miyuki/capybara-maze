@@ -4,14 +4,14 @@ int main()
 {
     sf::Vector2i playerPos(0,0);
     sf::Vector2i enemyStartPos(0,0);
-
     int totalItems = 0;
-    std::vector<std::vector<char>> map = read_map("map/map2.txt", playerPos, enemyStartPos, totalItems);
+
+    std::string mapPath = "map/map";
+    std::vector<std::vector<char>> map = read_map("map/map1.txt", playerPos, enemyStartPos, totalItems);
+    Game game(totalItems, enemyStartPos);
 
     int rows = map.size(); // マップの行数
     int cols = map[0].size(); // マップの列数
-
-    Game game(totalItems, enemyStartPos);
 
     sf::RenderWindow window(sf::VideoMode(cols * tileSize, rows * tileSize), "Capybara maze");
 
@@ -25,13 +25,29 @@ int main()
 
     while (window.isOpen())
     {
-        // ウィンドウで発生したイベント（キーボード、マウス、ウィンドウの閉じるボタンなど）を処理
         sf::Event event;
         while (window.pollEvent(event))
         {
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
+                if (game.getGoalReached()) {
+                    game.nextLevel(enemyStartPos);
+                    if (game.getCurrentLevel() > game.getMaxLevel()) {
+                        std::cout << "Game Completed!\n";
+                        //window.close();
+                    } else {
+                        map = read_map(mapPath + std::to_string(game.getCurrentLevel()) + ".txt", playerPos, enemyStartPos, totalItems);
+                        rows = map.size(); // マップの行数を更新
+                        cols = map[0].size();
+                        window.setSize(sf::Vector2u(cols * tileSize, rows * tileSize));
+
+                        game.resetEnemyPosition(enemyStartPos);
+                    }
+                }
+            }
             movement(playerPos, map, event, game);
         }
         
@@ -58,20 +74,17 @@ int main()
                     exit_sprite.setPosition(col * tileSize, row * tileSize);
                     window.draw(exit_sprite);
                 }
-                // else if (map[row][col] == 'X') {
-                //     enermy_sprite.setPosition(col * tileSize, row * tileSize);
-                //     window.draw(enermy_sprite);
-                // }
             }
         }
         player_sprite.setPosition(playerPos.x * tileSize, playerPos.y * tileSize);
         window.draw(player_sprite);
 
-        enermy_sprite.setPosition(game.getEnemyPos().x * tileSize, game.getEnemyPos().y * tileSize);
-        window.draw(enermy_sprite);
+        if (!(enemyStartPos.y == 0 && enemyStartPos.x == 0)) {
+            enermy_sprite.setPosition(game.getEnemyPos().x * tileSize, game.getEnemyPos().y * tileSize);
+            window.draw(enermy_sprite);
+        }
 
         game.update(window);
-
         window.display();
     }
     return 0;

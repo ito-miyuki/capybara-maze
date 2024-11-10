@@ -17,6 +17,9 @@ class Game {
         int _totalItems;
         int _collectedItems;
 
+        int _currentLevel;
+        int _maxLevel;
+
         sf::Text _messageText;
         sf::Clock _clock;
         bool _showMessage = false;
@@ -30,7 +33,7 @@ class Game {
         sf::RectangleShape _redFilter;
     
     public:
-        Game(int totalItem, const sf::Vector2i enemyStartPos) : _totalItems(totalItem), _collectedItems(0), _enemyPos(enemyStartPos) {
+        Game(int totalItem, const sf::Vector2i enemyStartPos) : _totalItems(totalItem), _collectedItems(0), _enemyPos(enemyStartPos) , _currentLevel(1), _maxLevel(3) {
 
             if (!_font.loadFromFile("src/Roboto-Medium.ttf")) {
                 std::cerr << "Failed to load font.\n";
@@ -47,10 +50,10 @@ class Game {
 
         int getTotalItem() const { return this->_totalItems; };
         int getCollectedItem() const { return this->_collectedItems; };
-
-        bool getGoalReached() {
-            return this->_goalReached;
-        }
+        int getCurrentLevel() const { return this->_currentLevel; };
+        sf::Vector2i getEnemyPos() const { return this->_enemyPos; };
+        bool getGoalReached() const { return this->_goalReached; };
+        int getMaxLevel() const { return _maxLevel; };
 
         bool canReachGoal() {
             return _collectedItems == _totalItems;
@@ -73,7 +76,7 @@ class Game {
 
         void displayGoalMessage() {
             _goalReached = true;
-            _messageText.setString("Goal");
+            _messageText.setString("Level Cleared! Press Enter to Continue");
         }
 
         void update(sf::RenderWindow& window) {
@@ -90,6 +93,15 @@ class Game {
                 window.draw(_redFilter);
                 _messageText.setString("Game Over");
                 window.draw(_messageText);
+            }
+        }
+
+        void nextLevel(const sf::Vector2i& newEnemyPos) {
+            if (_currentLevel < _maxLevel) {
+                _currentLevel++;
+                _goalReached = false;
+                _collectedItems = 0;
+                _enemyPos = newEnemyPos;
             }
         }
 
@@ -115,16 +127,16 @@ class Game {
             }
         }
 
-        sf::Vector2i getEnemyPos() const {
-            return this->_enemyPos;
-        }
-
         bool checkGameOver(const sf::Vector2i& playerPos) {
             if (playerPos == _enemyPos) {
                 _gameOver = true;
                 return true;
             }
             return false;
+        }
+
+        void resetEnemyPosition(const sf::Vector2i& newEnemyPos) {
+            _enemyPos = newEnemyPos;
         }
 };
 
