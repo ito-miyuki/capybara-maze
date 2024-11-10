@@ -6,14 +6,14 @@ int main()
     sf::Vector2i enemyStartPos(0,0);
 
     int totalItems = 0;
-    std::vector<std::vector<char>> map = read_map("map/map1.txt", playerPos, enemyStartPos, totalItems);
+    std::vector<std::vector<char>> map = read_map("map/map2.txt", playerPos, enemyStartPos, totalItems);
 
     int rows = map.size(); // マップの行数
     int cols = map[0].size(); // マップの列数
 
     Game game(totalItems, enemyStartPos);
 
-    sf::RenderWindow window(sf::VideoMode(cols * tileSize, rows * tileSize), "My window");
+    sf::RenderWindow window(sf::VideoMode(cols * tileSize, rows * tileSize), "Capybara maze");
 
     sf::Texture player_tex, floor_tex, grass_tex, item_tex, exit_tex, enermy_tex;
     sf::Sprite player_sprite = put_texture(player_tex, "png/player.png");

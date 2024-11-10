@@ -48,6 +48,10 @@ class Game {
         int getTotalItem() const { return this->_totalItems; };
         int getCollectedItem() const { return this->_collectedItems; };
 
+        bool getGoalReached() {
+            return this->_goalReached;
+        }
+
         bool canReachGoal() {
             return _collectedItems == _totalItems;
         }
@@ -90,7 +94,7 @@ class Game {
         }
 
         void moveEnemy(std::vector<std::vector<char>>& map) {
-            if (_enemyMoveClock.getElapsedTime().asSeconds() > 1.0f) {
+            if (_enemyMoveClock.getElapsedTime().asSeconds() > 0.5f) {
                 _enemyMoveClock.restart();
 
                 int direction = std::rand() % 4;
