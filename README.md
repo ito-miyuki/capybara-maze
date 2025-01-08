@@ -33,6 +33,6 @@ To run the game locally:
    make
 4. **Run the Game:***
    ```bash
-   ./solong-cpp
+   ./bin/smfl_executable
 Enjoy the game!✨
 
