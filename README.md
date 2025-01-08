@@ -1,22 +1,38 @@
-# Libft -Custom C Library Functions
+# Capybara Maze -so_long C++ Remake
 
-Welcome to the **Libft** project! 🎉  
-This project is an exploration into the world of C programming, where I’ve recreated many functions found in the basic C libraries. It’s designed to deepen my understanding of how these essential building blocks work under the hood.
+Welcome to the **Capybara Maze** project! 🎮  
+This project is a remaking of the original [so_long](https://github.com/ito-miyuki/so_long) game, now implemented in C++ using the [SFML](https://www.sfml-dev.org/) library.
 
+## About the Project
 
-## Why This Project?
+The goal of this project is to:
 
-- Learn by recreating standard C functions.
-- Understand implementation details and edge cases.
-- Practice and improve C programming skills.
+- **Enhance C++ Skills:** Transition the original C-based game to C++.
+- **Learn SFML:** Utilize the Simple and Fast Multimedia Library for graphics and input handling.
+- **Improve Game Features:** Introduce new functionalities and optimizations.
 
-## What’s Included?
+## Features
 
-The project includes custom versions of functions for:
+- **2D Graphics:** Rendered using SFML.
+- **Player Movement:** Navigate through the game world.
+- **Collectibles:** Gather items to progress.
+- **Exit Mechanism:** Find the exit to win the game.
 
-- **String Manipulation:** `strlen`, `strjoin`, `strlcat`
-- **Memory Management:** `malloc`, `calloc`
-- **Input/Output:** `printf`
-- and more!
+## Getting Started
 
-Thank you for visiting, and happy coding! 🚀
+To run the game locally:
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/ito-miyuki/solong-cpp.git
+2. **Navigate to the Project Directory:***
+   ```bash
+   cd solong-cpp
+3. **Build the Project: Ensure you have SFML installed on your system. Then, compile the source code:***
+   ```bash
+   make
+4. **Run the Game:***
+   ```bash
+   ./solong-cpp
+Enjoy the game!✨
+
