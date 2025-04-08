@@ -3,6 +3,8 @@
 Welcome to the **Capybara Maze** project! 🎮  
 This project is a remaking of the original [so_long](https://github.com/ito-miyuki/so_long) game, now implemented in C++ using the [SFML](https://www.sfml-dev.org/) library.
 
+![Demo](./assets/demo.gif)
+
 ## About the Project
 
 The goal of this project is to:
